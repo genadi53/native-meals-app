@@ -1,7 +1,6 @@
 import React from "react";
-import { Button, FlatList, StyleSheet, Text, View } from "react-native";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
-import MealItem from "../components/MealItem";
+import MealList from "../components/MealList";
 import { CATEGORIES, MEALS } from "../data/data";
 import Meal from "../models/meal";
 
@@ -11,37 +10,13 @@ const CategoryMealsScreen: NavigationStackScreenComponent<
   CategoryMealsScreenProps
 > = (props: any) => {
   const categoryId = props.navigation.getParam("categoryId");
-  const currentCategory = CATEGORIES.find((c) => c.id === categoryId);
+  // const currentCategory = CATEGORIES.find((c) => c.id === categoryId);
   const meals = MEALS.filter(
     (m: Meal) => m.categoryIds.indexOf(categoryId) >= 0
   );
 
-  const renderMealItem = ({ item }: { item: Meal }) => {
-    return (
-      <MealItem
-        meal={item}
-        onSelectMeal={() => {
-          props.navigation.navigate({
-            routeName: "MealsDetails",
-            params: {
-              mealId: item.id,
-            },
-          });
-        }}
-      />
-    );
-  };
-
-  return (
-    <View style={styles.screen}>
-      <FlatList
-        data={meals}
-        keyExtractor={(meal, _idx) => meal.id}
-        renderItem={renderMealItem}
-        style={{ width: "100%" }}
-      />
-
-      {/* <Button
+  return <MealList meals={meals} navigation={props.navigation} />;
+  /* <Button
         title="Go Back"
         onPress={() => {
           props.navigation.goBack();
@@ -51,9 +26,7 @@ const CategoryMealsScreen: NavigationStackScreenComponent<
           // props.navigation.pop(); // only in stack navigator
           // props.navigation.popToTop();
         }}
-      /> */}
-    </View>
-  );
+      /> */
 };
 
 CategoryMealsScreen.navigationOptions = (navData: any) => {
@@ -65,14 +38,5 @@ CategoryMealsScreen.navigationOptions = (navData: any) => {
     headerTitle: currentCategory ? currentCategory.title : "Other Category",
   };
 };
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 15,
-  },
-});
 
 export default CategoryMealsScreen;
