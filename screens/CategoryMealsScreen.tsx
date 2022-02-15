@@ -1,7 +1,9 @@
 import React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, FlatList, StyleSheet, Text, View } from "react-native";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
-import { CATEGORIES } from "../data/data";
+import MealItem from "../components/MealItem";
+import { CATEGORIES, MEALS } from "../data/data";
+import Meal from "../models/meal";
 
 interface CategoryMealsScreenProps {}
 
@@ -10,25 +12,46 @@ const CategoryMealsScreen: NavigationStackScreenComponent<
 > = (props: any) => {
   const categoryId = props.navigation.getParam("categoryId");
   const currentCategory = CATEGORIES.find((c) => c.id === categoryId);
+  const meals = MEALS.filter(
+    (m: Meal) => m.categoryIds.indexOf(categoryId) >= 0
+  );
+
+  const renderMealItem = ({ item }: { item: Meal }) => {
+    return (
+      <MealItem
+        meal={item}
+        onSelectMeal={() => {
+          props.navigation.navigate({
+            routeName: "MealsDetails",
+            params: {
+              mealId: item.id,
+            },
+          });
+        }}
+      />
+    );
+  };
 
   return (
     <View style={styles.screen}>
-      <Text>CategoryMealsScreen</Text>
-      <Text>{currentCategory?.title}</Text>
-      <Button
-        title="Go To Details Meals"
-        onPress={() => {
-          props.navigation.navigate("MealsDetails");
-        }}
+      <FlatList
+        data={meals}
+        keyExtractor={(meal, _idx) => meal.id}
+        renderItem={renderMealItem}
+        style={{ width: "100%" }}
       />
-      <Button
+
+      {/* <Button
         title="Go Back"
         onPress={() => {
           props.navigation.goBack();
+          // props.navigation.navigate("CategoriesMeals");
+          // props.navigation.push("CategoriesMeals");
+          // props.navigation.replace("CategoriesMeals"); // cannot go back
           // props.navigation.pop(); // only in stack navigator
           // props.navigation.popToTop();
         }}
-      />
+      /> */}
     </View>
   );
 };
@@ -46,8 +69,9 @@ CategoryMealsScreen.navigationOptions = (navData: any) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
+    padding: 15,
   },
 });
 

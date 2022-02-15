@@ -5,14 +5,14 @@ import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import MealDetailsScreen from "../screens/MealDetailsScreen";
 import { Platform } from "react-native";
-import colors from "../constants/colors";
+import colors from "../constants/customColors";
 
 const Navigator = createStackNavigator(
   {
     Categories: CategoriesScreen as any,
     CategoriesMeals: CategoryMealsScreen,
     MealsDetails: {
-      screen: MealDetailsScreen,
+      screen: MealDetailsScreen as any,
       // navigationOptions: {},
     },
   },

@@ -4,6 +4,9 @@ import { StatusBar } from "expo-status-bar";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import Navidator from "./navigation/MealsAppNavigation";
+import { enableScreens } from "react-native-screens";
+
+enableScreens(); // performance optimize
 
 const fetchFonts = () => {
   return Font.loadAsync({

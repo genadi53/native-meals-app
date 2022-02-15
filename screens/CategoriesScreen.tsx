@@ -1,16 +1,11 @@
 import React from "react";
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import {
   NavigationStackOptions,
   NavigationStackScreenComponent,
   NavigationStackScreenProps,
 } from "react-navigation-stack";
+import CategoryGrid from "../components/CategoryGrid";
 import { CATEGORIES } from "../data/data";
 import Category from "../models/category";
 
@@ -28,24 +23,17 @@ const CategoriesScreen: NavigationStackScreenComponent<
 
   const renderGridItem = ({ item }: { item: Category }) => {
     return (
-      <TouchableOpacity
-        style={styles.gridItem}
-        onPress={() => {
+      <CategoryGrid
+        category={item}
+        onSelect={() => {
           props.navigation.navigate({
             routeName: "CategoriesMeals",
             params: {
               categoryId: item.id,
             },
           });
-          // props.navigation.navigate("CategoriesMeals");
-          // props.navigation.push("CategoriesMeals");
-          // props.navigation.replace("CategoriesMeals"); // cannot go back
         }}
-      >
-        <View>
-          <Text>{item.title}</Text>
-        </View>
-      </TouchableOpacity>
+      />
     );
   };
 
@@ -64,12 +52,6 @@ const navigationOptions: NavigationStackOptions = {
 };
 CategoriesScreen.navigationOptions = navigationOptions;
 
-const styles = StyleSheet.create({
-  gridItem: {
-    flex: 1,
-    margin: 15,
-    height: 150,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default CategoriesScreen;
