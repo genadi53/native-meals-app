@@ -1,11 +1,15 @@
 import React from "react";
 import { FlatList, StyleSheet } from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import {
   NavigationStackOptions,
   NavigationStackScreenComponent,
   NavigationStackScreenProps,
 } from "react-navigation-stack";
+import { NavigationScreenProp } from "react-navigation";
+import { NavigationDrawerProp } from "react-navigation-drawer";
 import CategoryGrid from "../components/CategoryGrid";
+import CustomHeaderButton from "../components/HeaderButtons";
 import { CATEGORIES } from "../data/data";
 import Category from "../models/category";
 
@@ -47,8 +51,24 @@ const CategoriesScreen: NavigationStackScreenComponent<
   );
 };
 
-const navigationOptions: NavigationStackOptions = {
-  headerTitle: "Meal Categories",
+const navigationOptions: NavigationStackOptions = (navigationData: any) => {
+  const { navigation }: { navigation: NavigationDrawerProp<any, any> } =
+    navigationData;
+  return {
+    headerTitle: "Meal Categories",
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => {
+            console.log("open");
+            navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 CategoriesScreen.navigationOptions = navigationOptions;
 
