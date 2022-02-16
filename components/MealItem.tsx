@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import Meal from "../models/meal";
+import DefaultText from "./DefaultText";
 
 interface MealItemProps {
   meal: Meal;
@@ -36,9 +37,9 @@ const MealItem: React.FC<MealItemProps> = ({ onSelectMeal, meal }) => {
             </ImageBackground>
           </View>
           <View style={[styles.mealRow, styles.mealDetail]}>
-            <Text>{meal.complexity.toUpperCase()}</Text>
-            <Text>{meal.affordability.toUpperCase()}</Text>
-            <Text>{meal.duration}m</Text>
+            <DefaultText>{meal.complexity.toUpperCase()}</DefaultText>
+            <DefaultText>{meal.affordability.toUpperCase()}</DefaultText>
+            <DefaultText>{meal.duration}m</DefaultText>
           </View>
         </View>
       </TouchableOpacity>

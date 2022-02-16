@@ -51,7 +51,7 @@ const CategoriesScreen: NavigationStackScreenComponent<
   );
 };
 
-const navigationOptions: NavigationStackOptions = (navigationData: any) => {
+CategoriesScreen.navigationOptions = (navigationData: any) => {
   const { navigation }: { navigation: NavigationDrawerProp<any, any> } =
     navigationData;
   return {
@@ -62,7 +62,6 @@ const navigationOptions: NavigationStackOptions = (navigationData: any) => {
           title="Menu"
           iconName="ios-menu"
           onPress={() => {
-            console.log("open");
             navigation.toggleDrawer();
           }}
         />
@@ -70,7 +69,6 @@ const navigationOptions: NavigationStackOptions = (navigationData: any) => {
     ),
   };
 };
-CategoriesScreen.navigationOptions = navigationOptions;
 
 const styles = StyleSheet.create({});
 
