@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-import Navidator from "./navigation/MealsAppNavigation";
+import * as Font from "expo-font";
+import React, { useState } from "react";
+import { StyleSheet } from "react-native";
 import { enableScreens } from "react-native-screens";
+import { Provider } from "react-redux";
+import Navidator from "./navigation/MealsAppNavigation";
+import store from "./store/reduxStore";
 
 enableScreens(); // performance optimize
 
@@ -28,7 +29,11 @@ export default function App() {
     );
   }
 
-  return <Navidator />;
+  return (
+    <Provider store={store}>
+      <Navidator />;
+    </Provider>
+  );
 }
 
 const styles = StyleSheet.create({

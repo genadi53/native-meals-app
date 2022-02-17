@@ -10,7 +10,7 @@ import {
 import {
   HeaderButtons,
   Item,
-  HiddenItem,
+  // HiddenItem,
 } from "react-navigation-header-buttons";
 import { MEALS } from "../data/data";
 import CustomHeaderButton from "../components/HeaderButtons";
@@ -19,6 +19,9 @@ import {
   NavigationStackScreenProps,
 } from "react-navigation-stack";
 import DefaultText from "../components/DefaultText";
+import { useSelector } from "react-redux";
+import Meal from "../models/meal";
+import { MealsState } from "../store/reducers/meals";
 
 interface MealDetailsScreenProps {
   navigation: NavigationStackScreenProps;
@@ -34,7 +37,12 @@ const ListItem = (props: any) => {
 
 const MealDetailsScreen = (props: NavigationStackScreenProps) => {
   const mealId = props.navigation.getParam("mealId");
-  const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+  const availableMeals: Meal[] = useSelector(
+    (state: { meals: MealsState }) => state.meals.meals
+  );
+  const selectedMeal: Meal | undefined = availableMeals.find(
+    (meal) => meal.id === mealId
+  );
 
   if (selectedMeal) {
     return (
