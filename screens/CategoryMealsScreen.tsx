@@ -1,16 +1,14 @@
 import React from "react";
+import { StyleSheet, View } from "react-native";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
 import { useSelector } from "react-redux";
+import DefaultText from "../components/DefaultText";
 import MealList from "../components/MealList";
-import { CATEGORIES, MEALS } from "../data/data";
+import { CATEGORIES } from "../data/data";
 import Meal from "../models/meal";
 import { MealsState } from "../store/reducers/meals";
 
-interface CategoryMealsScreenProps {}
-
-const CategoryMealsScreen: NavigationStackScreenComponent<
-  CategoryMealsScreenProps
-> = (props: any) => {
+const CategoryMealsScreen: NavigationStackScreenComponent = (props: any) => {
   const categoryId = props.navigation.getParam("categoryId");
   // const currentCategory = CATEGORIES.find((c) => c.id === categoryId);
 
@@ -21,6 +19,11 @@ const CategoryMealsScreen: NavigationStackScreenComponent<
     (m: Meal) => m.categoryIds.indexOf(categoryId) >= 0
   );
 
+  if (meals.length === 0) {
+    <View style={styles.screen}>
+      <DefaultText>No meals found. Check your filters!</DefaultText>
+    </View>;
+  }
   return <MealList meals={meals} navigation={props.navigation} />;
   /* <Button
         title="Go Back"
@@ -44,5 +47,13 @@ CategoryMealsScreen.navigationOptions = (navData: any) => {
     headerTitle: currentCategory ? currentCategory.title : "Other Category",
   };
 };
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
 
 export default CategoryMealsScreen;

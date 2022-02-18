@@ -7,7 +7,14 @@ export const toggle_favorite = (mealId: string) => {
   return { type: Actions.TOGGLE_FAVORITE, payload: { mealId: mealId } };
 };
 
-export const setFilters = (filterSettings: {}) => {
+export interface FilterSettings {
+  isGlutenFree: boolean;
+  isVegan: boolean;
+  isVegetarian: boolean;
+  isLactoseFree: boolean;
+}
+
+export const setFilters = (filterSettings: FilterSettings) => {
   return {
     type: Actions.SET_FILTERS,
     payload: {
